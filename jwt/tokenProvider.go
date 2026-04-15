@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/itzLilix/questboard-shared/models"
+	dtos "github.com/itzLilix/questboard-shared/DTOs"
 )
 
 type tokenProvider struct {
@@ -20,7 +20,7 @@ type tokenProvider struct {
 
 type claims struct {
 	UserID string `json:"user_id"`
-    Role   models.Role `json:"role"`
+    Role   dtos.Role `json:"role"`
 	jwt.RegisteredClaims
 }
 
@@ -36,7 +36,7 @@ func NewTokenProvider(secretKey []byte, accessTokenTTL, refreshTokenTTL time.Dur
 	}
 }
 
-func (tp *tokenProvider) GenerateAccessToken(userID string, role models.Role) (string, error) {
+func (tp *tokenProvider) GenerateAccessToken(userID string, role dtos.Role) (string, error) {
 	expirationTime := time.Now().Add(tp.accessTokenTTL)
 	
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims{
@@ -64,7 +64,7 @@ func (tp *tokenProvider) GenerateRefreshToken() (string, string, time.Time, erro
 	return tokenString, hashString, time.Now().Add(tp.refreshTokenTTL), nil
 }
 
-func (tp *tokenProvider) ParseToken(tokenString string) (*models.TokenClaims, error) {
+func (tp *tokenProvider) ParseToken(tokenString string) (*dtos.TokenClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &claims{}, func(token *jwt.Token) (any, error) {
 		return tp.secretKey, nil
 	})
@@ -74,7 +74,7 @@ func (tp *tokenProvider) ParseToken(tokenString string) (*models.TokenClaims, er
 	}
 
 	if c, ok := token.Claims.(*claims); ok && token.Valid {
-		return &models.TokenClaims{
+		return &dtos.TokenClaims{
 			UserID: c.UserID,
 			Role:   c.Role,
 		}, nil
