@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	dtos "github.com/itzLilix/questboard-shared/DTOs"
+	"github.com/itzLilix/questboard-shared/dtos"
 )
 
 type tokenProvider struct {
