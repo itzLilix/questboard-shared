@@ -1,6 +1,6 @@
 package dtos
 
-type PublicProfile struct {
+type PublicProfileData struct {
 	ID             string  `json:"id"`
 	Username       string  `json:"username"`
 	DisplayName    string  `json:"displayName"`
@@ -12,4 +12,5 @@ type PublicProfile struct {
 	ReviewsCount   int     `json:"reviewsCount"`
 	Bio            *string `json:"bio,omitempty"`
 	Links          []Link  `json:"links,omitempty"`
+	IsFollowed     bool    `json:"isFollowed,omitempty"`
 }
