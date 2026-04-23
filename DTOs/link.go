@@ -1,6 +1,6 @@
 package dtos
 
 type Link struct {
-	Icon string `json:"icon"`
+	Type string `json:"type"`
 	URL  string `json:"url"`
 }
