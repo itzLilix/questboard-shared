@@ -2,9 +2,6 @@ package dtos
 
 import "time"
 
-type SessionFormat string
-type SessionType string
-
 type ProfileCardData struct {
 	ID           	  string  `json:"id"`
 	Username     	  string  `json:"username"`
@@ -15,7 +12,9 @@ type ProfileCardData struct {
 	ReviewsCount 	  int     `json:"reviewsCount"`
 	SessionsPlayed    int     `json:"sessionsPlayed"`
 	SessionsHosted    int     `json:"sessionsHosted"`
-	IsFollowed     	  bool    `json:"isFollowed,omitempty"`
+	PreferredFormat   *SessionFormat `json:"preferredFormat,omitempty"`
+	PreferredType     *SessionType   `json:"preferredType,omitempty"`
+	IsFollowed     	  bool    `json:"isFollowed"`
 }
 
 type GameSystemRef struct {
@@ -28,6 +27,18 @@ type SystemStat struct {
 	SessionsCount int `json:"sessionsCount"`
 }
 
+type SessionFormat string
+const (
+	Online SessionFormat = "online"
+	Offline SessionFormat = "offline"
+)
+
+type SessionType string
+const (
+	Oneshot SessionType = "oneshot"
+	Campaign SessionType = "campaign"
+)
+
 type NextSession struct {
 	ScheduledAt time.Time     `json:"scheduledAt"`
 	Format      SessionFormat `json:"format"`
@@ -38,7 +49,5 @@ type NextSession struct {
 type SessionCardData struct {
 	UserID            string          `json:"userId"`
 	SystemStats       []SystemStat    `json:"systemStats,omitempty"`
-	PreferredFormats  []SessionFormat `json:"preferredFormats,omitempty"`
-	PreferredTypes    []SessionType   `json:"preferredTypes,omitempty"`
 	NextSession       *NextSession    `json:"nextSession,omitempty"`
 }

@@ -12,5 +12,5 @@ type PublicProfileData struct {
 	ReviewsCount   int     `json:"reviewsCount"`
 	Bio            *string `json:"bio,omitempty"`
 	Links          []Link  `json:"links,omitempty"`
-	IsFollowed     bool    `json:"isFollowed,omitempty"`
+	IsFollowed     bool    `json:"isFollowed"`
 }
