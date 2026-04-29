@@ -51,3 +51,8 @@ type SessionCardData struct {
 	SystemStats       []SystemStat    `json:"systemStats,omitempty"`
 	NextSession       *NextSession    `json:"nextSession,omitempty"`
 }
+
+type ListUsersResponse struct {
+	Items      []ProfileCardData `json:"items"`
+	NextCursor string            `json:"nextCursor,omitempty"`
+}
