@@ -17,33 +17,16 @@ type ProfileCardData struct {
 	IsFollowed     	  bool    `json:"isFollowed"`
 }
 
-type GameSystemRef struct {
-	Slug string `json:"slug"`
-	Name string `json:"name"`
-}
-
 type SystemStat struct {
-	GameSystemRef
+	GameSystem
 	SessionsCount int `json:"sessionsCount"`
 }
-
-type SessionFormat string
-const (
-	Online SessionFormat = "online"
-	Offline SessionFormat = "offline"
-)
-
-type SessionType string
-const (
-	Oneshot SessionType = "oneshot"
-	Campaign SessionType = "campaign"
-)
 
 type NextSession struct {
 	ScheduledAt time.Time     `json:"scheduledAt"`
 	Format      SessionFormat `json:"format"`
 	Type        SessionType   `json:"type"`
-	System      GameSystemRef `json:"system"`
+	System      GameSystem `json:"system"`
 }
 
 type SessionCardData struct {

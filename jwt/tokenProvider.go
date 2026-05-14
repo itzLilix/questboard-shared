@@ -1,10 +1,6 @@
 package jwt
 
 import (
-	"crypto/rand"
-	"crypto/sha256"
-	"crypto/subtle"
-	"encoding/hex"
 	"fmt"
 	"time"
 
@@ -12,33 +8,40 @@ import (
 	"github.com/itzLilix/questboard-shared/dtos"
 )
 
+type Parser interface {
+	ParseToken(tokenString string) (*dtos.TokenClaims, error)
+}
+
+type Provider interface {
+	Parser
+	GenerateAccessToken(userID string, role dtos.Role) (string, error)
+}
+
 type tokenProvider struct {
-	secretKey []byte
-	accessTokenTTL  time.Duration
-	refreshTokenTTL time.Duration
+	secretKey      []byte
+	accessTokenTTL time.Duration
 }
 
 type claims struct {
-	UserID string `json:"user_id"`
-    Role   dtos.Role `json:"role"`
+	UserID string    `json:"user_id"`
+	Role   dtos.Role `json:"role"`
 	jwt.RegisteredClaims
 }
 
-const (
-	refreshTokenLength = 32
-)
+func NewParser(secretKey []byte) Parser {
+	return &tokenProvider{secretKey: secretKey}
+}
 
-func NewTokenProvider(secretKey []byte, accessTokenTTL, refreshTokenTTL time.Duration) *tokenProvider {
+func NewProvider(secretKey []byte, accessTokenTTL time.Duration) Provider {
 	return &tokenProvider{
-		secretKey: secretKey,
+		secretKey:      secretKey,
 		accessTokenTTL: accessTokenTTL,
-		refreshTokenTTL: refreshTokenTTL,
 	}
 }
 
 func (tp *tokenProvider) GenerateAccessToken(userID string, role dtos.Role) (string, error) {
 	expirationTime := time.Now().Add(tp.accessTokenTTL)
-	
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims{
 		UserID: userID,
 		Role:   role,
@@ -48,20 +51,6 @@ func (tp *tokenProvider) GenerateAccessToken(userID string, role dtos.Role) (str
 	})
 
 	return token.SignedString(tp.secretKey)
-}
-
-func (tp *tokenProvider) GenerateRefreshToken() (string, string, time.Time, error) {
-	tokenBytes := make([]byte, refreshTokenLength)
-	n, err := rand.Read(tokenBytes)
-	if err != nil || n != len(tokenBytes) {
-		return "", "", time.Time{}, fmt.Errorf("generateRefreshToken: %w", err)
-	}
-	tokenString := hex.EncodeToString(tokenBytes)
-
-	hash := sha256.Sum256([]byte(tokenString))
-	hashString := hex.EncodeToString(hash[:])
-
-	return tokenString, hashString, time.Now().Add(tp.refreshTokenTTL), nil
 }
 
 func (tp *tokenProvider) ParseToken(tokenString string) (*dtos.TokenClaims, error) {
@@ -81,11 +70,4 @@ func (tp *tokenProvider) ParseToken(tokenString string) (*dtos.TokenClaims, erro
 	}
 
 	return nil, fmt.Errorf("invalid claims")
-}
-
-func (tp *tokenProvider) IsRefreshTokenValid(clientToken, storedTokenHash string) bool {
-	clientHashBytes := sha256.Sum256([]byte(clientToken))
-	clientHash := hex.EncodeToString(clientHashBytes[:])
-
-	return subtle.ConstantTimeCompare([]byte(clientHash), []byte(storedTokenHash)) == 1
 }
