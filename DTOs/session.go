@@ -6,8 +6,8 @@ type Session struct {
 	Id          string `json:"id"`
 	Title       string `json:"title"`
 	Format      SessionFormat `json:"format"`
-	ScheduledAt time.Time `json:"scheduledAt"`
-	Duration	*float32 `json:"duration"`
+	ScheduledAt *time.Time `json:"scheduledAt,omitempty"`
+	Duration	*float64 `json:"duration"`
 	Location    *Location `json:"location"`
 	System GameSystem `json:"system"`
 	Type SessionType `json:"type"`
@@ -16,7 +16,7 @@ type Session struct {
 	PreviewUrl string `json:"previewUrl"`
 	MaxSeats uint8 `json:"maxSeats"`
 	MasterID string `json:"masterID"`
-	Price float32 `json:"price"`
+	Price float64 `json:"price"`
 	MasterNotes string `json:"masterNotes"`
 	Status SessionStatus `json:"status"`
 	FreeSeats uint8 `json:"freeSeats"`
