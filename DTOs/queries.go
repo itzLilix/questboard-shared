@@ -16,3 +16,13 @@ const (
 	SortAsc  SortOrder = "ASC"
 	SortDesc SortOrder = "DESC"
 )
+
+type SessionListSort string
+
+const (
+	SortSessionScheduledAt SessionListSort = "scheduled_at"
+	SortSessionCreatedAt   SessionListSort = "created_at"
+	SortSessionPrice       SessionListSort = "price"
+	SortSessionTitle       SessionListSort = "title"
+	SortSessionSystem      SessionListSort = "system"
+)
