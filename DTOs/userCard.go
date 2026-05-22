@@ -23,6 +23,7 @@ type SystemStat struct {
 }
 
 type NextSession struct {
+	Id string `json:"id"`
 	ScheduledAt time.Time     `json:"scheduledAt"`
 	Format      SessionFormat `json:"format"`
 	Type        SessionType   `json:"type"`
