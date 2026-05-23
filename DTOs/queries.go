@@ -26,3 +26,10 @@ const (
 	SortSessionTitle       SessionListSort = "title"
 	SortSessionSystem      SessionListSort = "system"
 )
+
+type MultiSelectState string
+
+const (
+	ExcludedState MultiSelectState = "excluded"
+	IncludedState MultiSelectState = "included"
+)
