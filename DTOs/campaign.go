@@ -12,14 +12,16 @@ const (
 )
 
 type Campaign struct {
-	ID          string         `json:"id"`
-	Title       string         `json:"title"`
-	Description *string        `json:"description,omitempty"`
-	MasterID    string         `json:"masterId"`
-	System      GameSystem     `json:"system"`
-	Status      CampaignStatus `json:"status"`
-	CreatedAt   time.Time      `json:"createdAt"`
-	UpdatedAt   time.Time      `json:"updatedAt"`
+	ID           string               `json:"id"`
+	Title        string               `json:"title"`
+	Description  *string              `json:"description,omitempty"`
+	MasterID     string               `json:"masterId"`
+	System       GameSystem           `json:"system"`
+	Status       CampaignStatus       `json:"status"`
+	Availability SessionAvailability  `json:"availability"`
+	CreatedAt    time.Time            `json:"createdAt"`
+	UpdatedAt    time.Time            `json:"updatedAt"`
+	Sessions     []CampaignSessionTie `json:"sessions"`
 }
 
 type CampaignSessionTie struct {

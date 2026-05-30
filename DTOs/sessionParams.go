@@ -55,6 +55,5 @@ const (
 )
 
 // StatusPresetPublic is a meta-value accepted by the status filter that the
-// server expands to {Published, Ongoing, Completed}. Not a real SessionStatus
-// — the domain enum stays pure; this constant just documents the wire string.
+// server expands to {Published, Ongoing, Completed}.
 const StatusPresetPublic = "public"

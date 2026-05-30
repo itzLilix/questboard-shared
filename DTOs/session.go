@@ -17,7 +17,6 @@ type Session struct {
 	MaxSeats uint8 `json:"maxSeats"`
 	MasterID string `json:"masterId"`
 	Price float64 `json:"price"`
-	MasterNotes string `json:"masterNotes"`
 	Status SessionStatus `json:"status"`
 	FreeSeats uint8 `json:"freeSeats"`
 	CreatedAt time.Time `json:"createdAt"`
