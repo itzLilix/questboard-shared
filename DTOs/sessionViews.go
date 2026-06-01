@@ -1,9 +1,10 @@
 package dtos
 
 type SessionListResponse struct {
-	Items      []Session            `json:"items"`
-	NextCursor string               `json:"nextCursor,omitempty"`
-	Users      map[string]UserBrief `json:"users"`
+	Items      []Session                     `json:"items"`
+	NextCursor string                        `json:"nextCursor,omitempty"`
+	Users      map[string]UserBrief          `json:"users"`
+	Campaigns  map[string]SessionCampaignRef `json:"campaigns"`
 }
 
 type SessionResponse struct {
