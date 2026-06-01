@@ -27,6 +27,14 @@ const (
 	SortSessionSystem      SessionListSort = "system"
 )
 
+type CampaignListSort string
+
+const (
+	SortCampaignCreatedAt CampaignListSort = "created_at"
+	SortCampaignTitle     CampaignListSort = "title"
+	SortCampaignStatus    CampaignListSort = "status"
+)
+
 type MultiSelectState string
 
 const (
