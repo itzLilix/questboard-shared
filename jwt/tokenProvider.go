@@ -56,7 +56,7 @@ func (tp *tokenProvider) GenerateAccessToken(userID string, role dtos.Role) (str
 func (tp *tokenProvider) ParseToken(tokenString string) (*dtos.TokenClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &claims{}, func(token *jwt.Token) (any, error) {
 		return tp.secretKey, nil
-	})
+	}, jwt.WithValidMethods([]string{jwt.SigningMethodHS256.Alg()}))
 
 	if err != nil {
 		return nil, err

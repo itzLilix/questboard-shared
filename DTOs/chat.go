@@ -1,5 +1,7 @@
 package dtos
 
+import "time"
+
 type ChatRole string
 
 const (
@@ -38,4 +40,30 @@ func (k ChatKind) Valid() bool {
 
 func (k *ChatKind) UnmarshalText(text []byte) error {
 	return unmarshalEnum(k, text, ChatKind.Valid, "chat kind")
+}
+
+type ChatSummary struct {
+	ID            string  `json:"id"`
+	SessionID     *string `json:"sessionId"`
+	CampaignID    *string `json:"campaignId"`
+	Kind          ChatKind `json:"kind"`
+	Title         *string `json:"title"`
+	PictureURL    *string `json:"pictureUrl"`
+	LastMessageAt *time.Time `json:"lastMessageAt"`
+	CreatedAt     time.Time `json:"createdAt"`
+	OtherUserID  *string `json:"otherUserId,omitempty"` // for direct chats only
+	LastMessage   *ChatLastMessage `json:"lastMessage,omitempty"`
+}
+
+type ChatMember struct {
+	UserID    string   `json:"userId"`
+	Role      ChatRole `json:"role"`
+	JoinedAt  time.Time `json:"joinedAt"`
+	LastReadID *string  `json:"lastReadId,omitempty"`
+}
+
+type ChatLastMessage struct {
+	SenderID      string  `json:"senderId"`
+	Body          *string `json:"body,omitempty"`
+	HasAttachment bool    `json:"hasAttachment"`
 }
