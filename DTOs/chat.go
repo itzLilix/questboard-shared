@@ -67,3 +67,16 @@ type ChatLastMessage struct {
 	Body          *string `json:"body,omitempty"`
 	HasAttachment bool    `json:"hasAttachment"`
 }
+
+type ChatPermissions struct {
+	Role                 ChatRole `json:"role"`
+	CanSendMessages      bool     `json:"canSendMessages"`
+	CanSendFiles         bool     `json:"canSendFiles"`
+	CanPinMessages       bool     `json:"canPinMessages"`
+	CanChangeInfo        bool     `json:"canChangeInfo"`
+	CanAddMembers        bool     `json:"canAddMembers"`
+	CanRemoveMembers     bool     `json:"canRemoveMembers"`
+	CanDeleteMessages    bool     `json:"canDeleteMessages"` // others' messages — you can always delete your own
+	CanManageRoles       bool     `json:"canManageRoles"`
+	CanManagePermissions bool     `json:"canManagePermissions"`
+}
