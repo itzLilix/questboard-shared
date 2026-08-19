@@ -62,6 +62,7 @@ type PinPayload struct {
 	MessageID string    `json:"messageId"`
 	PinnedBy  string    `json:"pinnedBy,omitempty"`
 	PinnedAt  time.Time `json:"pinnedAt,omitempty"`
+	OrderIndex *int16 `json:"order_index,omitempty"`
 }
 
 // ReadPayload is a read watermark — "user X has read up through message
@@ -75,6 +76,9 @@ type ReadPayload struct {
 	ReadAt            time.Time `json:"readAt"`
 }
 
+type DeletePayload struct {
+	MessageID string    `json:"messageId"`
+}
 
 type MessagePage struct {
 	Messages   []MessagePayload `json:"messages"`
